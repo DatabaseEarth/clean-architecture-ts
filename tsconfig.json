@@ -4,26 +4,40 @@
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
-
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@domain/*": [
+        "domain/*"
+      ],
+      "@app/*": [
+        "application/*"
+      ],
+      "@infra/*": [
+        "infrastructure/*"
+      ],
+      "@presentation": [
+        "presentation/*"
+      ]
+    },
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
+    "module": "commonjs", // nodenext
+    "target": "ES2021", // esnext
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
     // and npm install -D @types/node
-
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
-
+    // "exactOptionalPropertyTypes": true,
     // Style Options
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,
@@ -31,18 +45,26 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-
     // Recommended Options
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false, // true
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "env"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "env"
+  ]
 }
