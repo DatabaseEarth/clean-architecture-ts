@@ -1,7 +1,7 @@
-import { RefreshToken } from '../entities/refresh-token';
+import { RefreshToken } from "../entities/refresh-token";
 
 export interface IRefreshTokenRepository {
+    save(token: RefreshToken): Promise<RefreshToken>;
     findByToken(token: string): Promise<RefreshToken | null>;
-    save(refreshToken: RefreshToken): Promise<RefreshToken>;
-    deleteByUser(userId: string): Promise<void>;
+    deleteBySessionId(sessionId: string): Promise<void>;
 }

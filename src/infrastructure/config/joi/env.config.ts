@@ -19,6 +19,8 @@ const schema = Joi.object({
     DB_DATABASE: Joi.string().required(),
 
     AUTH_SECRET: Joi.string().required(),
+    AUTH_ACCESS_TOKEN_EXPIRES: Joi.string().default('15m'),
+    AUTH_REFRESH_TOKEN_EXPIRES: Joi.string().default('7d'),
 }).unknown();
 
 const { error, value: envVars } = schema.validate(process.env);

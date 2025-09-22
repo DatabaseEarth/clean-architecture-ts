@@ -1,4 +1,4 @@
-export interface RegisterUserDto {
+export interface RegisterAuthRequestDto {
     email: string;
     phone: string;
     password: string;
