@@ -15,7 +15,7 @@ export class LoginAuthUseCase {
     private readonly tokenService: ITokenService,
     private readonly configPort: ConfigPort,
     private readonly refreshTokenService: RefreshTokenService
-  ) {}
+  ) { }
 
   async execute(input: LoginUserRequestDto): Promise<LoginUserResponseDto> {
     const { email, password } = input;

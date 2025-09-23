@@ -3,6 +3,8 @@ import { User } from '@/domain/user/entities/user';
 import { RegisterAuthRequestDto } from '@/application/auth/dtos/register-auth.request.dto';
 import { IHashService } from '@/application/security/services/hash.service';
 import { IUuidService } from '@/application/security/services/uuid.service';
+import { Email } from '@/domain/user/value-objects/email.vo';
+import { PhoneNumber } from '@/domain/user/value-objects/phone-number.vo';
 
 export class RegisterAuthUseCase {
     constructor(
@@ -17,8 +19,8 @@ export class RegisterAuthUseCase {
 
         const user = new User(
             this.uuidService.generate(),
-            input.email,
-            input.phone,
+            new Email(input.email),
+            new PhoneNumber(input.phone),
             await this.hashService.hash(input.password),
             input.fullName,
         );
