@@ -1,15 +1,14 @@
-import { Global, Module, RequestMethod } from '@nestjs/common';
-import { LoggerPort } from '@/application/common/ports/logger.port';
+import { Global, Module } from '@nestjs/common';
 import { PinoLoggerService } from '@/infrastructure/logger/pino/pino-logger.service';
 
 @Global()
 @Module({
   providers: [
     {
-      provide: LoggerPort,
+      provide: 'LoggerPort',
       useClass: PinoLoggerService,
-    }
+    },
   ],
-  exports: [LoggerPort]
+  exports: ['LoggerPort'],
 })
-export class LoggerModule { }
+export class LoggerModule {}

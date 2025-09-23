@@ -7,8 +7,8 @@ import { createSwaggerDocument } from './swagger';
 import compression from 'compression';
 import { isProduction } from './common/utils/env';
 import 'reflect-metadata';
-import { LoggerPort } from '@/application/common/ports/logger.port';
 import { ConfigPort } from '@/application/common/ports/config.port';
+import { LoggerPort } from '@/application/common/ports/logger.port';
 
 export async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -18,9 +18,9 @@ export async function bootstrap() {
       : ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
-  const configService = app.get(ConfigPort);
-  const loggerService = app.get(LoggerPort);
-  app.useLogger(app.get(LoggerPort));
+  const configService: ConfigPort = app.get('ConfigPort');
+  const loggerService: LoggerPort = app.get('LoggerPort');
+  app.useLogger(app.get('LoggerPort'));
   app.use(compression());
   app.enableCors({
     origin: true, // 'http://localhost:5173'

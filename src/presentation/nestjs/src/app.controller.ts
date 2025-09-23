@@ -12,12 +12,11 @@ import { AppRequest, AppResponse } from './app.dto';
 import { ApiExtraModels } from '@nestjs/swagger';
 import { ApiResponse } from './common/interfaces';
 import { formatResponse } from './common/helpers';
-import { LoggerPort } from '@/application/common/ports/logger.port';
 
 @Controller()
 @ApiExtraModels(AppResponse)
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly logger: LoggerPort) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   @ApiDataResponse(AppResponse, { isArray: false, withMeta: false })
