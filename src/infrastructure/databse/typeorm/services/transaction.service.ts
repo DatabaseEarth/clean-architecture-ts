@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { DataSource, EntityManager } from 'typeorm';
-import { TransactionPort } from '@/application/common/ports/transaction.port';
+import { TransactionPort } from '@/shared-kernel/application/ports/transaction/transaction.port';
 import { AppDataSource } from '../data-source';
 
 @Injectable()

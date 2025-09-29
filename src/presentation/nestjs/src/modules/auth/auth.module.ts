@@ -5,15 +5,15 @@ import { AuthController } from './controllers';
 import { BcryptHashService } from '@/infrastructure/security/bcrypt/bcrypt-hash.service';
 import { CryptoUuidService } from '@/infrastructure/security/crypto/crypto-uuid.service';
 import { IUserRepository } from '@/domain/user/repositories/user.repository';
-import { IHashService } from '@/application/security/services/hash.service';
-import { IUuidService } from '@/application/security/services/uuid.service';
+import { IHashService } from '@/shared-kernel/application/ports/security/hash.port';
+import { IUuidService } from '@/shared-kernel/application/ports/security/uuid.port';
 import { RefreshTokenRepositoryTypeORM } from '@/infrastructure/databse/typeorm/repositories/refresh-token.repository.typeorm';
 import { RefreshTokenService } from '@/application/auth/services/refresh-token.service';
 import { IRefreshTokenRepository } from '@/domain/auth/repositories/refresh-token.repository';
 import { LoginAuthUseCase } from '@/application/auth/use-case/login-auth.usecase';
 import { JwtTokenService } from '@/infrastructure/security/jwt/jwt-token.service';
-import { ITokenService } from '@/application/security/services/token.service';
-import { ConfigPort } from '@/application/common/ports/config.port';
+import { ITokenService } from '@/shared-kernel/application/ports/security/token.port';
+import { ConfigPort } from '@/shared-kernel/application/ports/config/config.port';
 import { StringValue } from 'ms';
 
 @Module({

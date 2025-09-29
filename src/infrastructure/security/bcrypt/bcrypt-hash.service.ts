@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { IHashService } from '@/application/security/services/hash.service';
+import { IHashService } from '@/shared-kernel/application/ports/security/hash.port';
 
 export class BcryptHashService implements IHashService {
     async hash(value: string, salt: number = 10): Promise<string> {

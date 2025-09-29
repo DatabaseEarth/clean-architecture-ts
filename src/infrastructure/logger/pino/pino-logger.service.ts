@@ -1,4 +1,4 @@
-import { LoggerPort } from "@/application/common/ports/logger.port";
+import { LoggerPort } from "@/shared-kernel/application/ports/logger/logger.port";
 import pino from "pino";
 
 export class PinoLoggerService implements LoggerPort {

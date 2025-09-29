@@ -1,5 +1,5 @@
-import { CachePort } from "@/application/common/ports/cache.port";
-import { ConfigPort } from "@/application/common/ports/config.port";
+import { CachePort } from "@/shared-kernel/application/ports/cache/cache.port";
+import { ConfigPort } from "@/shared-kernel/application/ports/config/config.port";
 import Redis from "ioredis";
 
 export class RedisCacheService implements CachePort {

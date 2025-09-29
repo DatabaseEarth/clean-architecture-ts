@@ -1,20 +1,30 @@
-import { Email } from "../value-objects/email.vo";
+import { BaseEntity } from "@/shared-kernel/domain/entities/base.entity";
+import { Email } from "@/shared-kernel/domain/value-objects/email.vo";
 import { PhoneNumber } from "../value-objects/phone-number.vo";
 
-export class User {
-    constructor(
-        private _id: string,
-        private _email: Email,
-        private _phone: PhoneNumber,
-        private _password: string,
-        private _fullName: string,
-    ) { }
+export class User extends BaseEntity {
+    private _email: Email;
+    private _phone: PhoneNumber;
+    private _password: string;
+    private _fullName: string;
 
-    // Getters
-    get id(): string {
-        return this._id;
+    constructor(
+        id: string,
+        email: Email,
+        phone: PhoneNumber,
+        password: string,
+        fullName: string,
+        createdAt?: Date,
+        createdBy?: string | null
+    ) {
+        super(id, createdAt, createdBy);
+        this._email = email;
+        this._phone = phone;
+        this._password = password;
+        this._fullName = fullName;
     }
 
+    // Getters
     get email(): string {
         return this._email.getValue();
     }
@@ -31,20 +41,41 @@ export class User {
         return this._password;
     }
 
-    // Setters
-    set email(email: Email) {
-        this._email = email;
+    // Business methods
+    changeEmail(newEmail: Email, updatedBy?: string): void {
+        this._email = newEmail;
+        this.markAsUpdated(updatedBy);
     }
 
-    set phone(phone: PhoneNumber) {
-        this._phone = phone;
+    changePhone(newPhone: PhoneNumber, updatedBy?: string): void {
+        this._phone = newPhone;
+        this.markAsUpdated(updatedBy);
     }
 
-    set fullName(fullName: string) {
+    updateProfile(fullName: string, updatedBy?: string): void {
         this._fullName = fullName;
+        this.markAsUpdated(updatedBy);
     }
 
-    set password(password: string) {
-        this._password = password;
+    changePassword(newPassword: string, updatedBy?: string): void {
+        this._password = newPassword;
+        this.markAsUpdated(updatedBy);
+    }
+
+    // Domain-specific methods
+    getEmailObject(): Email {
+        return this._email;
+    }
+
+    getPhoneObject(): PhoneNumber {
+        return this._phone;
+    }
+
+    // Override for domain-specific validation
+    markAsDeleted(deletedBy?: string): void {
+        if (this.isDeleted()) {
+            throw new Error('User is already deleted');
+        }
+        super.markAsDeleted(deletedBy);
     }
 }

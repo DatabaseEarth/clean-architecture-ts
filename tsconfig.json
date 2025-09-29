@@ -9,17 +9,20 @@
       "@/*": [
         "./src/*"
       ],
+      "@shared-kernel/*": [
+        "./src/shared-kernel/*"
+      ],
       "@domain/*": [
-        "domain/*"
+        "./src/domain/*"
       ],
-      "@app/*": [
-        "application/*"
+      "@application/*": [
+        "./src/application/*"
       ],
-      "@infra/*": [
-        "infrastructure/*"
+      "@infrastructure/*": [
+        "./src/infrastructure/*"
       ],
-      "@presentation": [
-        "presentation/*"
+      "@presentation/*": [
+        "./src/presentation/*"
       ]
     },
     // Environment Settings

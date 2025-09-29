@@ -1,9 +1,7 @@
-import { InvalidEmailFormatException } from '../../common/exceptions';
-
 export class Email {
   constructor(private readonly value: string) {
     if (!this.isValid(value)) {
-      throw new InvalidEmailFormatException(value);
+      throw new Error('Invalid email format');
     }
   }
 
@@ -22,5 +20,13 @@ export class Email {
 
   toString(): string {
     return this.value;
+  }
+
+  getDomain(): string {
+    return this.value.split('@')[1];
+  }
+
+  getLocalPart(): string {
+    return this.value.split('@')[0];
   }
 }

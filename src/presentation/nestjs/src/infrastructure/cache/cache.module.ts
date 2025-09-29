@@ -1,4 +1,4 @@
-import { ConfigPort } from '@/application/common/ports/config.port';
+import { ConfigPort } from '@/shared-kernel/application/ports/config/config.port';
 import { RedisCacheService } from '@/infrastructure/cache/redis/redis.service';
 import { Module } from '@nestjs/common';
 

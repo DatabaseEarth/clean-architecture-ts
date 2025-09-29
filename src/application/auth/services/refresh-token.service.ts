@@ -1,6 +1,6 @@
 import { RefreshToken } from "@/domain/auth/entities/refresh-token";
 import { IRefreshTokenRepository } from "@/domain/auth/repositories/refresh-token.repository";
-import { IUuidService } from "@/application/security/services/uuid.service";
+import { IUuidService } from "@/shared-kernel/application/ports/security/uuid.port";
 
 export class RefreshTokenService {
     constructor(
