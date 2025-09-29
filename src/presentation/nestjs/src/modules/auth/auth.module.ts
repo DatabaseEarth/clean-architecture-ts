@@ -1,5 +1,5 @@
 import { RegisterAuthUseCase } from '@/application/auth/use-case/register-auth.usecase';
-import { UserRepositoryTypeORM } from '@/infrastructure/databse/typeorm/repositories/user.repository.typeorm';
+import { UserRepositoryTypeORM } from '@/infrastructure/database/typeorm/repositories/user.repository.typeorm';
 import { Module } from '@nestjs/common';
 import { AuthController } from './controllers';
 import { BcryptHashService } from '@/infrastructure/security/bcrypt/bcrypt-hash.service';
@@ -7,7 +7,7 @@ import { CryptoUuidService } from '@/infrastructure/security/crypto/crypto-uuid.
 import { IUserRepository } from '@/domain/user/repositories/user.repository';
 import { IHashService } from '@/shared-kernel/application/ports/security/hash.port';
 import { IUuidService } from '@/shared-kernel/application/ports/security/uuid.port';
-import { RefreshTokenRepositoryTypeORM } from '@/infrastructure/databse/typeorm/repositories/refresh-token.repository.typeorm';
+import { RefreshTokenRepositoryTypeORM } from '@/infrastructure/database/typeorm/repositories/refresh-token.repository.typeorm';
 import { RefreshTokenService } from '@/application/auth/services/refresh-token.service';
 import { IRefreshTokenRepository } from '@/domain/auth/repositories/refresh-token.repository';
 import { LoginAuthUseCase } from '@/application/auth/use-case/login-auth.usecase';

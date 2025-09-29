@@ -70,12 +70,4 @@ export class User extends BaseEntity {
     getPhoneObject(): PhoneNumber {
         return this._phone;
     }
-
-    // Override for domain-specific validation
-    markAsDeleted(deletedBy?: string): void {
-        if (this.isDeleted()) {
-            throw new Error('User is already deleted');
-        }
-        super.markAsDeleted(deletedBy);
-    }
 }

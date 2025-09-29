@@ -54,3 +54,4 @@ export class RefreshToken {
         this._ipAddress = ipAddress;
     }
 }
+

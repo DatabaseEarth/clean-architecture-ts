@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { bootstrap } from "./presentation/nestjs/src/main";
-import { AppDataSource } from "@/infrastructure/databse/typeorm/data-source";
+import { AppDataSource } from "@/infrastructure/database/typeorm/data-source";
 
 async function runServer() {
   console.log("🚀 Clean Architecture + DDD App starting...");
