@@ -1,6 +1,6 @@
 import { StringValue } from "ms";
 import jwt, { SignOptions } from "jsonwebtoken";
-import { ITokenService } from "@/shared-kernel/application/ports/security/token.port";
+import { ITokenService } from "@/application/ports/security/token.port";
 
 export class JwtTokenService implements ITokenService {
     constructor(

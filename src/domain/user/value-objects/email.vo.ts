@@ -1,4 +1,4 @@
-import { InvalidEmailFormatException } from '../../common/exceptions';
+import { InvalidEmailFormatException } from '@/shared-kernel/exceptions';
 
 export class Email {
   constructor(private readonly value: string) {

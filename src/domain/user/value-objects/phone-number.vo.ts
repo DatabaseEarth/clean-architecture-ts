@@ -1,4 +1,4 @@
-import { InvalidPhoneNumberException } from '../../common/exceptions';
+import { InvalidPhoneNumberException } from '@/shared-kernel/exceptions';
 
 export class PhoneNumber {
   constructor(private readonly value: string) {

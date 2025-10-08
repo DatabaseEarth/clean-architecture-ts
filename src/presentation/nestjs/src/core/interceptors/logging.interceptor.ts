@@ -1,4 +1,4 @@
-import { LoggerPort } from '@/shared-kernel/application/ports/logger/logger.port';
+import { LoggerPort } from '@/application/ports/logger/logger.port';
 import {
   CallHandler,
   ExecutionContext,

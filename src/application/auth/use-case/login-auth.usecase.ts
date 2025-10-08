@@ -1,12 +1,16 @@
-import { IHashService } from "@/shared-kernel/application/ports/security/hash.port";
-import { ITokenService } from "@/shared-kernel/application/ports/security/token.port";
-import { IUserRepository } from "@/domain/user/repositories/user.repository";
-import { LoginUserRequestDto } from "../dtos/login-auth.request.dto";
-import { LoginUserResponseDto } from "../dtos/login-auth.response.dto";
-import { IUuidService } from "@/shared-kernel/application/ports/security/uuid.port";
-import { ConfigPort } from "@/shared-kernel/application/ports/config/config.port";
-import { RefreshTokenService } from "../services/refresh-token.service";
-import { InvalidCredentialsException, UserNotFoundException } from "@/shared-kernel/domain/exceptions";
+import {
+  IHashService,
+  IUuidService,
+  ITokenService,
+} from "@/application/ports/security";
+import { ConfigPort } from "@/application/ports/config";
+import { IUserRepository } from "@/domain/user/repositories";
+import { LoginUserRequestDto, LoginUserResponseDto } from "../dtos";
+import { RefreshTokenService } from "../services";
+import {
+  InvalidCredentialsException,
+  UserNotFoundException,
+} from "@/shared-kernel/exceptions";
 
 export class LoginAuthUseCase {
   constructor(
@@ -16,11 +20,11 @@ export class LoginAuthUseCase {
     private readonly tokenService: ITokenService,
     private readonly configPort: ConfigPort,
     private readonly refreshTokenService: RefreshTokenService
-  ) { }
+  ) {}
 
   async execute(input: LoginUserRequestDto): Promise<LoginUserResponseDto> {
     const { email, password } = input;
-    
+
     try {
       const user = await this.userRepo.findByEmail(email);
       if (!user) {
@@ -52,18 +56,17 @@ export class LoginAuthUseCase {
         ),
       ]);
 
-      await this.refreshTokenService.create(
-        user.id,
-        refreshToken,
-        sessionId
-      );
+      await this.refreshTokenService.create(user.id, refreshToken, sessionId);
 
       return { accessToken, refreshToken };
     } catch (error) {
-      if (error instanceof UserNotFoundException || error instanceof InvalidCredentialsException) {
+      if (
+        error instanceof UserNotFoundException ||
+        error instanceof InvalidCredentialsException
+      ) {
         throw error;
       }
-      throw new Error('Login failed due to unexpected error');
+      throw new Error("Login failed due to unexpected error");
     }
   }
 }

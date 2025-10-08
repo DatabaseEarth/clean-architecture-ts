@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { IUuidService } from '@/shared-kernel/application/ports/security/uuid.port';
+import { IUuidService } from '@/application/ports/security/uuid.port';
 
 export class CryptoUuidService implements IUuidService {
     generate(): string {

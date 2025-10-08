@@ -1,4 +1,4 @@
-import { ConfigPort } from '@/shared-kernel/application/ports/config/config.port';
+import { ConfigPort } from '@/application/ports/config/config.port';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()

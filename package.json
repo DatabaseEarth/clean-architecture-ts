@@ -6,7 +6,7 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch",
+    "nest:dev": "nest start --watch",
     "build": "nest build",
     "start:prod": "node dist/main.js",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",

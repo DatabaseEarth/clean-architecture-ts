@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import * as Joi from "joi";
-import { ConfigPort } from "@/shared-kernel/application/ports/config/config.port";
+import { ConfigPort } from "@/application/ports/config";
 
 // Load .env
 dotenv.config();

@@ -1,31 +1,31 @@
-import { IUserRepository } from '@/domain/user/repositories/user.repository';
-import { User } from '@/domain/user/entities/user';
-import { AppDataSource } from '../data-source';
-import { UserEntity } from '../entities/user.entity';
-import { DataSource, Repository } from 'typeorm';
-import { UserMapper } from '../mappers/user.mapper';
+import { IUserRepository } from "@/domain/user/repositories";
+import { User } from "@/domain/user/entities";
+import { AppDataSource } from "../data-source";
+import { UserEntity } from "../entities/user.entity";
+import { DataSource, Repository } from "typeorm";
+import { UserMapper } from "../mappers";
 
 export class UserRepositoryTypeORM implements IUserRepository {
-    private repository: Repository<UserEntity>;
-    constructor(dataSource: DataSource = AppDataSource) {
-        this.repository = dataSource.getRepository(UserEntity)
-    }
+  private repository: Repository<UserEntity>;
+  constructor(dataSource: DataSource = AppDataSource) {
+    this.repository = dataSource.getRepository(UserEntity);
+  }
 
-    async findByEmail(email: string): Promise<User | null> {
-        const entity = await this.repository.findOne({ where: { email } });
-        if (!entity) return null;
-        return UserMapper.toDomain(entity);
-    }
+  async findByEmail(email: string): Promise<User | null> {
+    const entity = await this.repository.findOne({ where: { email } });
+    if (!entity) return null;
+    return UserMapper.toDomain(entity);
+  }
 
-    async findById(id: string): Promise<User | null> {
-        const entity = await this.repository.findOne({ where: { id } });
-        if (!entity) return null;
-        return UserMapper.toDomain(entity);
-    }
+  async findById(id: string): Promise<User | null> {
+    const entity = await this.repository.findOne({ where: { id } });
+    if (!entity) return null;
+    return UserMapper.toDomain(entity);
+  }
 
-    async save(user: User): Promise<User> {
-        const entity = this.repository.create(UserMapper.toEntity(user));
-        await this.repository.save(entity);
-        return user;
-    }
+  async save(user: User): Promise<User> {
+    const entity = this.repository.create(UserMapper.toEntity(user));
+    await this.repository.save(entity);
+    return user;
+  }
 }

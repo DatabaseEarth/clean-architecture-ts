@@ -7,8 +7,8 @@ import { createSwaggerDocument } from './swagger';
 import compression from 'compression';
 import { isProduction } from './common/utils/env';
 import 'reflect-metadata';
-import { ConfigPort } from '@/shared-kernel/application/ports/config/config.port';
-import { LoggerPort } from '@/shared-kernel/application/ports/logger/logger.port';
+import { ConfigPort } from '@/application/ports/config/config.port';
+import { LoggerPort } from '@/application/ports/logger/logger.port';
 
 export async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
