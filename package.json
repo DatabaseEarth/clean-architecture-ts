@@ -6,11 +6,13 @@
   "license": "ISC",
   "private": true,
   "scripts": {
+    "nest:build": "nest build",
+    "nest": "nest start",
     "nest:dev": "nest start --watch",
-    "build": "nest build",
-    "start:prod": "node dist/main.js",
+    "nest:debug": "nest start --debug --watch",
+    "nest:prod": "node dist/main",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
     "test": "jest",
     "test:watch": "jest --watch"
   },

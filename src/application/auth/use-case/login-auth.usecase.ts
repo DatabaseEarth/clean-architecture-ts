@@ -7,10 +7,9 @@ import { ConfigPort } from "@/application/ports/config";
 import { IUserRepository } from "@/domain/user/repositories";
 import { LoginUserRequestDto, LoginUserResponseDto } from "../dtos";
 import { RefreshTokenService } from "../services";
-import {
-  InvalidCredentialsException,
-  UserNotFoundException,
-} from "@/shared-kernel/core";
+import { BaseException } from "@/shared-kernel/exceptions";
+import { ErrorCode } from "@/shared-kernel/enums/exception.enum";
+import { ERROR_CODES, VALIDATION_MESSAGES } from "@/shared-kernel/constants";
 
 export class LoginAuthUseCase {
   constructor(
@@ -27,14 +26,20 @@ export class LoginAuthUseCase {
 
     try {
       const user = await this.userRepo.findByEmail(email);
-      if (!user) {
-        throw new UserNotFoundException(email);
-      }
+      if (!user)
+        throw new BaseException({
+          code: ErrorCode.USER_NOT_FOUND,
+          message: VALIDATION_MESSAGES.INVALID_CREDENTIALS,
+          httpStatus: ERROR_CODES[ErrorCode.USER_NOT_FOUND].httpStatus,
+        });
 
       const match = await this.hashService.compare(password, user.password);
-      if (!match) {
-        throw new InvalidCredentialsException();
-      }
+      if (!match)
+        throw new BaseException({
+          code: ErrorCode.INVALID_CREDENTIALS,
+          message: VALIDATION_MESSAGES.INVALID_CREDENTIALS,
+          httpStatus: ERROR_CODES[ErrorCode.INVALID_CREDENTIALS].httpStatus,
+        });
 
       const sessionId = this.uuidService.generate();
       const payload = {
@@ -60,13 +65,12 @@ export class LoginAuthUseCase {
 
       return { accessToken, refreshToken };
     } catch (error) {
-      if (
-        error instanceof UserNotFoundException ||
-        error instanceof InvalidCredentialsException
-      ) {
-        throw error;
-      }
-      throw new Error("Login failed due to unexpected error");
+      if (error instanceof BaseException) throw error;
+      throw new BaseException({
+        code: ErrorCode.INTERNAL_ERROR,
+        message: VALIDATION_MESSAGES.LOGIN_FAILED,
+        httpStatus: ERROR_CODES[ErrorCode.INTERNAL_ERROR].httpStatus,
+      });
     }
   }
 }

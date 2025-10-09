@@ -1,22 +1,55 @@
-export const ERROR_CODES = {
-  // Validation errors
-  VALIDATION_ERROR: "VALIDATION_ERROR",
-  REQUIRED_FIELD: "REQUIRED_FIELD",
-  INVALID_FORMAT: "INVALID_FORMAT",
+import { ErrorCode, HttpStatusCode } from "../enums/exception.enum";
 
-  // Business errors
-  BUSINESS_RULE_VIOLATION: "BUSINESS_RULE_VIOLATION",
-  USER_NOT_FOUND: "USER_NOT_FOUND",
-  INVALID_CREDENTIALS: "INVALID_CREDENTIALS",
-  ACCESS_DENIED: "ACCESS_DENIED",
+export const ERROR_CODES: Record<
+  ErrorCode,
+  { httpStatus: HttpStatusCode; message?: string }
+> = {
+  // ---------------------- VALIDATION ----------------------
+  [ErrorCode.VALIDATION_ERROR]: {
+    httpStatus: HttpStatusCode.BAD_REQUEST,
+  },
+  [ErrorCode.REQUIRED_FIELD]: {
+    httpStatus: HttpStatusCode.BAD_REQUEST,
+  },
+  [ErrorCode.INVALID_FORMAT]: {
+    httpStatus: HttpStatusCode.BAD_REQUEST,
+  },
 
-  // System errors
-  INTERNAL_ERROR: "INTERNAL_ERROR",
-  DATABASE_ERROR: "DATABASE_ERROR",
-  EXTERNAL_SERVICE_ERROR: "EXTERNAL_SERVICE_ERROR",
+  // ---------------------- BUSINESS ----------------------
+  [ErrorCode.BUSINESS_RULE_VIOLATION]: {
+    httpStatus: HttpStatusCode.CONFLICT,
+  },
+  [ErrorCode.USER_NOT_FOUND]: {
+    httpStatus: HttpStatusCode.NOT_FOUND,
+  },
+  [ErrorCode.INVALID_CREDENTIALS]: {
+    httpStatus: HttpStatusCode.UNAUTHORIZED,
+  },
+  [ErrorCode.ACCESS_DENIED]: {
+    httpStatus: HttpStatusCode.FORBIDDEN,
+  },
 
-  // Authentication errors
-  TOKEN_EXPIRED: "TOKEN_EXPIRED",
-  TOKEN_INVALID: "TOKEN_INVALID",
-  UNAUTHORIZED: "UNAUTHORIZED",
+  // ---------------------- SYSTEM ----------------------
+  [ErrorCode.INTERNAL_ERROR]: {
+    httpStatus: HttpStatusCode.INTERNAL_SERVER_ERROR,
+  },
+  [ErrorCode.DATABASE_ERROR]: {
+    httpStatus: HttpStatusCode.INTERNAL_SERVER_ERROR,
+  },
+  [ErrorCode.EXTERNAL_SERVICE_ERROR]: {
+    httpStatus: HttpStatusCode.BAD_GATEWAY,
+  },
+
+  // ---------------------- AUTH ----------------------
+  [ErrorCode.TOKEN_EXPIRED]: {
+    httpStatus: HttpStatusCode.UNAUTHORIZED,
+  },
+  [ErrorCode.TOKEN_INVALID]: {
+    httpStatus: HttpStatusCode.UNAUTHORIZED,
+  },
+  [ErrorCode.UNAUTHORIZED]: {
+    httpStatus: HttpStatusCode.UNAUTHORIZED,
+  },
 } as const;
+
+export type ErrorCodeType = keyof typeof ERROR_CODES;

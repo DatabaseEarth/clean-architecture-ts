@@ -8,7 +8,7 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { LoggingInterceptor, TransformInterceptor } from './interceptors';
 import { LoggerMiddleware } from '../common/middleware';
 import { ValidationException } from '../common/pipes';
-import { CatchEverythingFilter } from '../common/filters';
+import { HttpExceptionFilter } from '../common/filters';
 
 @Module({
   providers: [
@@ -26,7 +26,7 @@ import { CatchEverythingFilter } from '../common/filters';
     },
     {
       provide: APP_FILTER,
-      useClass: CatchEverythingFilter,
+      useClass: HttpExceptionFilter,
     },
   ],
 })
