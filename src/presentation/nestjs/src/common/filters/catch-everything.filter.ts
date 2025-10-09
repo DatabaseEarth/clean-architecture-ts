@@ -6,7 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { ApiErrorResponse } from '../interfaces';
+import { ApiErrorResponse } from '@/shared-kernel/responses';
 
 @Catch()
 export class CatchEverythingFilter implements ExceptionFilter {
@@ -18,7 +18,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
 
     let httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
-    let error_code = 'INTERNAL_SERVER_ERROR';
+    let errorCode = 'INTERNAL_SERVER_ERROR';
     let details: any = undefined;
 
     if (exception instanceof HttpException) {
@@ -30,7 +30,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
         details = exception.stack;
       } else if (typeof response === 'object' && response !== null) {
         message = response['message'] || message;
-        error_code = response['error'] || error_code;
+        errorCode = response['error'] || errorCode;
         details = response['details'] || response['errors'] || undefined;
       }
     } else if (exception instanceof Error) {
@@ -41,7 +41,7 @@ export class CatchEverythingFilter implements ExceptionFilter {
     const responseBody: ApiErrorResponse = {
       status: 'error',
       message,
-      error_code,
+      errorCode,
       details,
     };
 

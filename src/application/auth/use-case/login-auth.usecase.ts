@@ -10,7 +10,7 @@ import { RefreshTokenService } from "../services";
 import {
   InvalidCredentialsException,
   UserNotFoundException,
-} from "@/shared-kernel/exceptions";
+} from "@/shared-kernel/core";
 
 export class LoginAuthUseCase {
   constructor(

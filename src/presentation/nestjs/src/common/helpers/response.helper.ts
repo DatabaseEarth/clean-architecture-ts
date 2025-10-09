@@ -1,5 +1,5 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { ApiResponse, MetaData } from '../../common/interfaces';
+import { ApiResponse, MetaData } from '@/shared-kernel/responses';
 
 export const formatResponse = {
   single<T>(
@@ -10,8 +10,8 @@ export const formatResponse = {
     const transformedData =
       dto && data
         ? plainToInstance(dto, data, {
-          excludeExtraneousValues: true,
-        })
+            excludeExtraneousValues: true,
+          })
         : null;
     return {
       status: 'success',

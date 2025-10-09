@@ -3,5 +3,6 @@
  * These constants are shared across all bounded contexts
  */
 
-export * from "./domain.constants";
-export * from "./regex.constants";
+export * from "./validation.constant";
+export * from "./regex.constant";
+export * from "./error-code.constant";

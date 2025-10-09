@@ -1,4 +1,4 @@
-import { ApiResponse } from '../../common/interfaces';
+import { ApiResponse } from '@/shared-kernel/responses';
 import {
   CallHandler,
   ExecutionContext,
@@ -10,7 +10,8 @@ import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
 export class TransformInterceptor<T>
-  implements NestInterceptor<T, ApiResponse<T>> {
+  implements NestInterceptor<T, ApiResponse<T>>
+{
   intercept(
     context: ExecutionContext,
     next: CallHandler<T>,

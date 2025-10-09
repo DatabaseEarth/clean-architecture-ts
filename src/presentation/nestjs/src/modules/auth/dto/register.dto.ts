@@ -1,4 +1,5 @@
-import { validateMessage } from '../../../common/helpers';
+import { REGEX_PATTERNS } from '@/shared-kernel/constants';
+import { validateMessage } from '@/shared-kernel/validations';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 import {
@@ -38,7 +39,7 @@ export class RegisterRequestDto {
     type: 'string',
     example: '+84775922008',
   })
-  @Matches(/^\+?[0-9]{8,15}$/, {
+  @Matches(REGEX_PATTERNS.PHONE, {
     message: validateMessage.invalid('Số điện thoại'),
   })
   @IsNotEmpty({ message: validateMessage.required('Số điện thoại') })
@@ -53,7 +54,7 @@ export class RegisterRequestDto {
   @IsString({ message: validateMessage.string('Mật khẩu') })
   @IsNotEmpty({ message: validateMessage.required('Mật khẩu') })
   @Length(8, 50, { message: validateMessage.length('Mật khẩu', 8, 50) })
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, {
+  @Matches(REGEX_PATTERNS.PASSWORD, {
     message:
       'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt',
   })
@@ -61,4 +62,4 @@ export class RegisterRequestDto {
   password: string;
 }
 
-export class RegisterResponseDto { }
+export class RegisterResponseDto {}

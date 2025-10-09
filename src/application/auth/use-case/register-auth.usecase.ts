@@ -3,7 +3,7 @@ import { User } from "@/domain/user/entities";
 import { RegisterAuthRequestDto } from "@/application/auth/dtos";
 import { IHashService, IUuidService } from "@/application/ports/security";
 import { PhoneNumber, Email } from "@/domain/user/value-objects";
-import { EmailAlreadyExistsException } from "@/shared-kernel/exceptions";
+import { EmailAlreadyExistsException } from "@/shared-kernel/core";
 
 export class RegisterAuthUseCase {
   constructor(

@@ -2,7 +2,6 @@ import { AppService } from './app.service';
 import {
   Controller,
   Get,
-  HttpCode,
   HttpException,
   HttpStatus,
   Query,
@@ -10,7 +9,7 @@ import {
 import { ApiDataResponse } from './common/decorators';
 import { AppRequest, AppResponse } from './app.dto';
 import { ApiExtraModels } from '@nestjs/swagger';
-import { ApiResponse } from './common/interfaces';
+import { ApiResponse } from '@/shared-kernel/responses';
 import { formatResponse } from './common/helpers';
 
 @Controller()
@@ -21,16 +20,16 @@ export class AppController {
   @Get()
   @ApiDataResponse(AppResponse, { isArray: false, withMeta: false })
   async example(): Promise<ApiResponse<AppResponse>> {
-    // const data = this.appService.getConfig();
-    throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
-    // return formatResponse.single(AppResponse, data, 'Lấy dữ liệu thành công');
+    const data = this.appService.getConfig();
+    // throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
+    return formatResponse.single(AppResponse, data, 'Lấy dữ liệu thành công');
   }
 
   @Get('/array')
   @ApiDataResponse(AppResponse, { isArray: true, withMeta: false })
   async exampleArray(): Promise<ApiResponse<AppResponse[]>> {
     const data = this.appService.getConfig();
-    throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
+    // throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
     return formatResponse.array(
       AppResponse,
       [data],
@@ -44,7 +43,7 @@ export class AppController {
     @Query() appRequest: AppRequest,
   ): Promise<ApiResponse<AppResponse[]>> {
     const data = this.appService.getConfig();
-    throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
+    // throw new HttpException('hehehe', HttpStatus.NOT_FOUND);
     return formatResponse.paginate(
       AppResponse,
       [data],

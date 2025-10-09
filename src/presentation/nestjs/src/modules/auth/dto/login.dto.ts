@@ -5,7 +5,7 @@ import { Expose, Transform } from 'class-transformer';
 export class LoginRequestDto extends PickType(RegisterRequestDto, [
   'email',
   'password',
-] as const) { }
+] as const) {}
 
 export class TokenSessionDto {
   @ApiProperty({ name: 'access_token', type: 'string' })
@@ -19,8 +19,7 @@ export class TokenSessionDto {
 
 export class LoginResponseDto extends TokenSessionDto {
   @Transform(({ obj }) => obj.accessToken)
-  accessToken: string
-
+  accessToken: string;
 
   @Transform(({ obj }) => obj.refreshToken)
   refreshToken: string;

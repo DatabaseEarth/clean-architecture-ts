@@ -1,4 +1,4 @@
-import { BaseEntity } from "@/shared-kernel/domain/entities";
+import { BaseEntity } from "@/shared-kernel/core";
 import { Email, PhoneNumber } from "@/domain/user/value-objects";
 
 export class User extends BaseEntity {

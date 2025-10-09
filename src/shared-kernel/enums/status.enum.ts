@@ -12,47 +12,6 @@ export enum Status {
   ARCHIVED = "archived",
 }
 
-export enum OrderStatus {
-  PENDING = "pending",
-  CONFIRMED = "confirmed",
-  PROCESSING = "processing",
-  SHIPPED = "shipped",
-  DELIVERED = "delivered",
-  CANCELLED = "cancelled",
-  REFUNDED = "refunded",
-}
-
-export enum PaymentStatus {
-  PENDING = "pending",
-  PROCESSING = "processing",
-  COMPLETED = "completed",
-  FAILED = "failed",
-  CANCELLED = "cancelled",
-  REFUNDED = "refunded",
-}
-
-export enum UserRole {
-  ADMIN = "admin",
-  USER = "user",
-  MODERATOR = "moderator",
-  GUEST = "guest",
-}
-
-export enum UserStatus {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  PENDING = "pending",
-  SUSPENDED = "suspended",
-  DELETED = "deleted",
-}
-
-export enum AuthStatus {
-  AUTHENTICATED = "authenticated",
-  UNAUTHENTICATED = "unauthenticated",
-  EXPIRED = "expired",
-  INVALID = "invalid",
-}
-
 export enum LogLevel {
   ERROR = "error",
   WARN = "warn",

@@ -1,4 +1,5 @@
-import { InvalidEmailFormatException } from '@/shared-kernel/exceptions';
+import { REGEX_PATTERNS } from "@/shared-kernel/constants";
+import { InvalidEmailFormatException } from "@/shared-kernel/core";
 
 export class Email {
   constructor(private readonly value: string) {
@@ -8,7 +9,7 @@ export class Email {
   }
 
   private isValid(email: string): boolean {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegex = REGEX_PATTERNS.EMAIL;
     return emailRegex.test(email) && email.length <= 254;
   }
 

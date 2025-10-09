@@ -1,5 +1,5 @@
 import { ApiOkResponse, ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { ApiSuccessResponse, MetaData } from '../interfaces/response.interface';
+import { ApiSuccessResponse, MetaData } from '@/shared-kernel/responses';
 import { applyDecorators, Type } from '@nestjs/common';
 import {
   ReferenceObject,
@@ -35,7 +35,7 @@ export class DataMetaData implements MetaData {
 
 export class DataResponse<T> implements ApiSuccessResponse<T> {
   @ApiProperty({ description: 'Trạng thái trả về' })
-  status: 'success' | 'oke';
+  status: 'success';
 
   @ApiProperty({ description: 'Dữ liệu phản hồi' })
   data: T | T[] | null;

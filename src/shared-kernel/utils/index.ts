@@ -3,5 +3,5 @@
  * These utilities are shared across all bounded contexts
  */
 
-export * from "./date.util";
+export * from "./date-time.util";
 export * from "./string.util";

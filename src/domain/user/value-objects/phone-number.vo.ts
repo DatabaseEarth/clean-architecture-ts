@@ -1,4 +1,5 @@
-import { InvalidPhoneNumberException } from '@/shared-kernel/exceptions';
+import { REGEX_PATTERNS } from "@/shared-kernel/constants";
+import { InvalidPhoneNumberException } from "@/shared-kernel/core";
 
 export class PhoneNumber {
   constructor(private readonly value: string) {
@@ -8,7 +9,7 @@ export class PhoneNumber {
   }
 
   private isValid(phone: string): boolean {
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const phoneRegex = REGEX_PATTERNS.PHONE;
     return phoneRegex.test(phone) && phone.length >= 10 && phone.length <= 15;
   }
 

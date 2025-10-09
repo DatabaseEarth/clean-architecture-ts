@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, ValidationError } from '@nestjs/common';
-import { ApiErrorResponse } from '../interfaces/response.interface';
+import { ApiErrorResponse } from '@/shared-kernel/responses';
 
 export interface IValidationErrors {
   [field: string]: string[];
@@ -30,7 +30,7 @@ export class ValidationException extends HttpException {
     const response: ApiErrorResponse = {
       status: 'error',
       message: 'Validation failed',
-      error_code: 'VALIDATION_ERROR',
+      errorCode: 'VALIDATION_ERROR',
       details: formattedErrors,
     };
 
