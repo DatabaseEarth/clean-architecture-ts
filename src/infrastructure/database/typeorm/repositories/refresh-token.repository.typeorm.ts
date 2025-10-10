@@ -17,8 +17,21 @@ export class RefreshTokenRepositoryTypeORM implements IRefreshTokenRepository {
     return RefreshTokenMapper.toDomain(saved);
   }
 
+  async update(token: RefreshToken): Promise<RefreshToken> {
+    const entity = RefreshTokenMapper.toEntity(token);
+    const updated = await this.repository.save(entity);
+    return RefreshTokenMapper.toDomain(updated);
+  }
+
   async findByToken(token: string): Promise<RefreshToken | null> {
     const entity = await this.repository.findOne({ where: { token } });
+    return entity ? RefreshTokenMapper.toDomain(entity) : null;
+  }
+
+  async getRefreshTokenBySessionId(
+    sessionId: string
+  ): Promise<RefreshToken | null> {
+    const entity = await this.repository.findOne({ where: { sessionId } });
     return entity ? RefreshTokenMapper.toDomain(entity) : null;
   }
 

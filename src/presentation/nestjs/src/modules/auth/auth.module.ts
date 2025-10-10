@@ -8,6 +8,8 @@ import { IRefreshTokenRepository } from '@/domain/auth/repositories';
 import {
   RegisterAuthUseCase,
   LoginAuthUseCase,
+  RefreshTokenAuthUseCase,
+  LogoutAuthUseCase,
 } from '@/application/auth/use-case';
 import {
   IHashService,
@@ -69,6 +71,21 @@ import { SecurityModule } from '../../infrastructure/security';
         'ConfigPort',
         RefreshTokenService,
       ],
+    },
+    {
+      provide: RefreshTokenAuthUseCase,
+      useFactory: (
+        token: ITokenService,
+        config: ConfigPort,
+        refreshService: RefreshTokenService,
+      ) => new RefreshTokenAuthUseCase(token, config, refreshService),
+      inject: ['ITokenService', 'ConfigPort', RefreshTokenService],
+    },
+    {
+      provide: LogoutAuthUseCase,
+      useFactory: (refreshService: RefreshTokenService, token: ITokenService) =>
+        new LogoutAuthUseCase(refreshService, token),
+      inject: [RefreshTokenService, 'ITokenService'],
     },
   ],
   exports: [],

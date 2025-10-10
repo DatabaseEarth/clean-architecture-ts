@@ -8,11 +8,10 @@ export class LoginRequestDto extends PickType(RegisterRequestDto, [
 ] as const) {}
 
 export class TokenSessionDto {
-  @ApiProperty({ name: 'access_token', type: 'string' })
-  @Expose({ name: 'access_token' })
+  @ApiProperty({ name: 'accessToken', type: 'string' })
   accessToken: string;
 
-  @ApiProperty({ name: 'refresh_token', type: 'string' })
+  @ApiProperty({ name: 'refreshToken', type: 'string' })
   @Expose({ name: 'refresh_token' })
   refreshToken: string;
 }

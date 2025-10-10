@@ -5,7 +5,7 @@ import {
 } from "@/application/ports/security";
 import { ConfigPort } from "@/application/ports/config";
 import { IUserRepository } from "@/domain/user/repositories";
-import { LoginUserRequestDto, LoginUserResponseDto } from "../dtos";
+import { LoginAuthRequestDto, LoginAuthResponseDto } from "../dtos";
 import { RefreshTokenService } from "../services";
 import { BaseException } from "@/shared-kernel/exceptions";
 import { ErrorCode } from "@/shared-kernel/enums/exception.enum";
@@ -21,7 +21,7 @@ export class LoginAuthUseCase {
     private readonly refreshTokenService: RefreshTokenService
   ) {}
 
-  async execute(input: LoginUserRequestDto): Promise<LoginUserResponseDto> {
+  async execute(input: LoginAuthRequestDto): Promise<LoginAuthResponseDto> {
     const { email, password } = input;
 
     try {
@@ -33,7 +33,11 @@ export class LoginAuthUseCase {
           httpStatus: ERROR_CODES[ErrorCode.USER_NOT_FOUND].httpStatus,
         });
 
-      const match = await this.hashService.compare(password, user.password);
+      const match = await user.verifyPassword(
+        user.password,
+        password,
+        this.hashService
+      );
       if (!match)
         throw new BaseException({
           code: ErrorCode.INVALID_CREDENTIALS,

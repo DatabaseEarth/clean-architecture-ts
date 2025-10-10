@@ -69,4 +69,13 @@ export class User extends BaseEntity {
   getPhoneObject(): PhoneNumber {
     return this._phone;
   }
+
+  // Business method để verify password
+  verifyPassword(
+    hashedPassword: string,
+    password: string,
+    hashService: any
+  ): Promise<boolean> {
+    return hashService.compare(password, hashedPassword);
+  }
 }
