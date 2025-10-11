@@ -12,7 +12,7 @@ import {
   RegisterRequestDto,
   RefreshTokenRequestDto,
 } from '../dto';
-import { ApiDataResponse } from '../../../common/decorators';
+import { ApiDataResponse, Public } from '../../../common/decorators';
 import { ApiResponse, RestResponse } from '@/shared-kernel/responses';
 import {
   RegisterAuthUseCase,
@@ -32,7 +32,7 @@ export class AuthController {
     private readonly refreshTokenAuthUseCase: RefreshTokenAuthUseCase,
   ) {}
 
-  //   @Public()
+  @Public()
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Đăng ký tài khoản' })
@@ -48,7 +48,7 @@ export class AuthController {
     return RestResponse.success<null>(null, 'Đăng ký tài khoản thành công!');
   }
 
-  //   @Public()
+  @Public()
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Đăng nhập tài khoản' })
