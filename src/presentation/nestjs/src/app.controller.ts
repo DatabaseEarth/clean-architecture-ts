@@ -6,10 +6,11 @@ import {
   HttpStatus,
   Query,
 } from '@nestjs/common';
-import { ApiDataResponse } from './common/decorators';
+import { ApiDataResponse, Public, CurrentUser } from './common/decorators';
+import { ICurrentUserPayload } from '@/shared-kernel/interfaces';
 import { AppRequest, AppResponse } from './app.dto';
 import { ApiExtraModels } from '@nestjs/swagger';
-import { ApiResponse } from '@/shared-kernel/responses';
+import { ApiResponse, RestResponse } from '@/shared-kernel/responses';
 import { formatResponse } from './common/helpers';
 
 @Controller()
@@ -64,5 +65,26 @@ export class AppController {
   @ApiDataResponse(null)
   async testError(): Promise<ApiResponse<null>> {
     throw new HttpException('Test error for interceptor', HttpStatus.ACCEPTED);
+  }
+
+  @Public()
+  @Get('/public')
+  @ApiDataResponse(Object)
+  async publicEndpoint(): Promise<ApiResponse<{ message: string }>> {
+    return RestResponse.success<{ message: string }>(
+      { message: 'Đây là endpoint public, không cần authentication' },
+      'Truy cập thành công!',
+    );
+  }
+
+  @Get('/protected')
+  @ApiDataResponse(Object)
+  async protectedEndpoint(
+    @CurrentUser() user: ICurrentUserPayload,
+  ): Promise<ApiResponse<ICurrentUserPayload>> {
+    return RestResponse.success<ICurrentUserPayload>(
+      user,
+      'Đây là endpoint protected, cần authentication!',
+    );
   }
 }

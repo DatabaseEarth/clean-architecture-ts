@@ -1,7 +1,13 @@
+import { BaseException } from "../exceptions";
+import { ErrorCode } from "../enums/exception.enum";
+
 export class Id {
   constructor(private readonly value: string) {
     if (!this.isValid(value)) {
-      throw new Error("Invalid ID format");
+      throw new BaseException({
+        code: ErrorCode.VALIDATION_ERROR,
+        message: "Invalid ID format"
+      });
     }
   }
 

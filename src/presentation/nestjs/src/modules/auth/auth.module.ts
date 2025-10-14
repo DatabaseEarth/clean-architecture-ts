@@ -1,6 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { AuthController } from './controllers';
 import { UserModule } from '../user';
+import { JwtAuthGuard } from './guards';
 
 import { IUserRepository } from '@/domain/user/repositories';
 import { IRefreshTokenRepository } from '@/domain/auth/repositories';
@@ -8,6 +10,8 @@ import { IRefreshTokenRepository } from '@/domain/auth/repositories';
 import {
   RegisterAuthUseCase,
   LoginAuthUseCase,
+  RefreshTokenAuthUseCase,
+  LogoutAuthUseCase,
 } from '@/application/auth/use-case';
 import {
   IHashService,
@@ -70,7 +74,24 @@ import { SecurityModule } from '../../infrastructure/security';
         RefreshTokenService,
       ],
     },
+    {
+      provide: RefreshTokenAuthUseCase,
+      useFactory: (
+        token: ITokenService,
+        config: ConfigPort,
+        refreshService: RefreshTokenService,
+      ) => new RefreshTokenAuthUseCase(token, config, refreshService),
+      inject: ['ITokenService', 'ConfigPort', RefreshTokenService],
+    },
+    {
+      provide: LogoutAuthUseCase,
+      useFactory: (refreshService: RefreshTokenService, token: ITokenService) =>
+        new LogoutAuthUseCase(refreshService, token),
+      inject: [RefreshTokenService, 'ITokenService'],
+    },
+    JwtAuthGuard,
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
-  exports: [],
+  exports: [JwtAuthGuard],
 })
 export class AuthModule {}

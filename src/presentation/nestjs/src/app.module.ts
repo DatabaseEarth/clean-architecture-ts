@@ -6,12 +6,8 @@ import { CoreModule } from './core';
 import { infrastructure } from './infrastructure';
 
 @Module({
-  imports: [
-    CoreModule,
-    ...infrastructure,
-    ...modules,
-  ],
+  imports: [CoreModule, ...infrastructure, ...modules],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -4,9 +4,10 @@ import { RefreshToken } from "@/domain/auth/entities";
 import { db } from "../config";
 import { refreshTokens } from "../schema/refresh-tokens";
 import { RefreshTokenMapper } from "../mappers";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { PoolClient } from "pg";
+import * as schema from "../schema";
 
 @Injectable()
 export class RefreshTokenRepositoryDrizzle implements IRefreshTokenRepository {
@@ -18,7 +19,7 @@ export class RefreshTokenRepositoryDrizzle implements IRefreshTokenRepository {
 
   private getDb() {
     if (this.client) {
-      return drizzle(this.client, { schema: { refreshTokens } });
+      return drizzle(this.client, { schema });
     }
     return db;
   }
@@ -55,5 +56,32 @@ export class RefreshTokenRepositoryDrizzle implements IRefreshTokenRepository {
     await this.getDb()
       .delete(refreshTokens)
       .where(eq(refreshTokens.sessionId, sessionId));
+  }
+
+  async update(refreshToken: RefreshToken): Promise<RefreshToken> {
+    const entity = RefreshTokenMapper.toEntity(refreshToken);
+    await this.getDb()
+      .update(refreshTokens)
+      .set({
+        token: entity.token,
+        sessionId: entity.sessionId,
+        deviceInfo: entity.deviceInfo,
+        ipAddress: entity.ipAddress,
+        updatedAt: new Date(),
+      })
+      .where(eq(refreshTokens.id, entity.id));
+    return refreshToken;
+  }
+
+  async getRefreshTokenBySessionId(
+    sessionId: string
+  ): Promise<RefreshToken | null> {
+    const result = await this.getDb()
+      .select()
+      .from(refreshTokens)
+      .where(eq(refreshTokens.sessionId, sessionId))
+      .limit(1);
+    if (result.length === 0) return null;
+    return RefreshTokenMapper.toDomain(result[0]);
   }
 }

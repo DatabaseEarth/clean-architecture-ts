@@ -25,4 +25,18 @@ export class RefreshTokenService {
     );
     return this.repo.save(rt);
   }
+
+  async update(token: RefreshToken): Promise<RefreshToken> {
+    return this.repo.update(token);
+  }
+
+  async getRefreshTokenBySessionId(
+    sessionId: string
+  ): Promise<RefreshToken | null> {
+    return this.repo.getRefreshTokenBySessionId(sessionId);
+  }
+
+  async delete(sessionId: string): Promise<void> {
+    await this.repo.deleteBySessionId(sessionId);
+  }
 }

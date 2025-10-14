@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { DataSource, QueryRunner } from "typeorm";
 import { UnitOfWorkPort } from "@/application/ports/transaction";
 import { AppDataSource } from "../data-source";
+import { DatabaseException } from "@/shared-kernel/exceptions";
 
 /**
  * Unit of Work Service Implementation
@@ -34,9 +35,7 @@ export class UnitOfWorkService implements UnitOfWorkPort {
   }
 
   async commit(): Promise<void> {
-    if (!this.queryRunner) {
-      throw new Error("No transaction started. Call start() first.");
-    }
+    if (!this.queryRunner) throw DatabaseException.noActiveTransaction();
 
     await this.queryRunner.commitTransaction();
     await this.queryRunner.release();
@@ -44,9 +43,7 @@ export class UnitOfWorkService implements UnitOfWorkPort {
   }
 
   async rollback(): Promise<void> {
-    if (!this.queryRunner) {
-      throw new Error("No transaction started. Call start() first.");
-    }
+    if (!this.queryRunner) throw DatabaseException.noActiveTransaction();
 
     await this.queryRunner.rollbackTransaction();
     await this.queryRunner.release();
@@ -63,9 +60,8 @@ export class UnitOfWorkService implements UnitOfWorkPort {
    * @throws Error if no transaction is active
    */
   getQueryRunner(): QueryRunner {
-    if (!this.queryRunner) {
-      throw new Error("No transaction active. Call start() first.");
-    }
+    if (!this.queryRunner) throw DatabaseException.noActiveTransaction();
+
     return this.queryRunner;
   }
 }

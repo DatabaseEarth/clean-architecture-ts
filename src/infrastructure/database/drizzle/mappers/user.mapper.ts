@@ -1,4 +1,4 @@
-import { User } from "@/domain/user/entities/user";
+import { User } from "@/domain/user/entities";
 import { Email, PhoneNumber } from "@/domain/user/value-objects";
 import { users } from "../schema/users";
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";

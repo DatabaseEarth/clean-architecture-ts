@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 import * as Joi from "joi";
 import { ConfigPort } from "@/application/ports/config";
+import { BaseException } from "@/shared-kernel/exceptions";
+import { ErrorCode } from "@/shared-kernel/enums/exception.enum";
 
 // Load .env
 dotenv.config();
@@ -35,7 +37,10 @@ const schema = Joi.object({
 const { error, value: envVars } = schema.validate(process.env);
 
 if (error) {
-  throw new Error(`Config validation error: ${error.message}`);
+  throw new BaseException({
+    code: ErrorCode.VALIDATION_ERROR,
+    message: `Config validation error: ${error.message}`
+  });
 }
 
 export class EnvConfigService implements ConfigPort {

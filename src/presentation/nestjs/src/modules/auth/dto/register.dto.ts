@@ -1,7 +1,6 @@
 import { REGEX_PATTERNS } from '@/shared-kernel/constants';
 import { validateMessage } from '@/shared-kernel/validations';
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -10,8 +9,9 @@ import {
   Matches,
   MaxLength,
 } from 'class-validator';
+import { RegisterAuthRequestDto } from '@/application/auth/dtos';
 
-export class RegisterRequestDto {
+export class RegisterRequestDto implements RegisterAuthRequestDto {
   @ApiProperty({
     name: 'fullname',
     type: 'string',
@@ -20,7 +20,6 @@ export class RegisterRequestDto {
   @IsString({ message: validateMessage.string('Họ và tên') })
   @Length(2, 255, { message: validateMessage.length('Họ và tên', 2, 255) })
   @IsNotEmpty({ message: validateMessage.required('Họ và tên') })
-  @Expose({ name: 'fullname' })
   fullName: string;
 
   @ApiProperty({
@@ -31,7 +30,6 @@ export class RegisterRequestDto {
   @IsEmail({}, { message: validateMessage.string('Email') })
   @MaxLength(100, { message: validateMessage.max.string('Email', 100) })
   @IsNotEmpty({ message: validateMessage.required('Email') })
-  @Expose({ name: 'email' })
   email: string;
 
   @ApiProperty({
@@ -43,7 +41,6 @@ export class RegisterRequestDto {
     message: validateMessage.invalid('Số điện thoại'),
   })
   @IsNotEmpty({ message: validateMessage.required('Số điện thoại') })
-  @Expose({ name: 'phone' })
   phone: string;
 
   @ApiProperty({
@@ -58,8 +55,5 @@ export class RegisterRequestDto {
     message:
       'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt',
   })
-  @Expose({ name: 'password' })
   password: string;
 }
-
-export class RegisterResponseDto {}

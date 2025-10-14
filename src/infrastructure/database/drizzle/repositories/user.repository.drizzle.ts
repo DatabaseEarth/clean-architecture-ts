@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { IUserRepository } from "@/domain/user/repositories";
 import { User } from "@/domain/user/entities";
-import { db, pool } from "../config";
+import { db } from "../config";
 import { users } from "../schema/users";
 import { UserMapper } from "../mappers";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { PoolClient } from "pg";
+import * as schema from "../schema";
 
 @Injectable()
 export class UserRepositoryDrizzle implements IUserRepository {
@@ -18,7 +19,7 @@ export class UserRepositoryDrizzle implements IUserRepository {
 
   private getDb() {
     if (this.client) {
-      return drizzle(this.client, { schema: { users } });
+      return drizzle(this.client, { schema });
     }
     return db;
   }
