@@ -12,7 +12,6 @@ export class TokenSessionDto {
   accessToken: string;
 
   @ApiProperty({ name: 'refreshToken', type: 'string' })
-  @Expose({ name: 'refresh_token' })
   refreshToken: string;
 }
 
