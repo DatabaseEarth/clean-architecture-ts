@@ -1,12 +1,15 @@
 import "dotenv/config";
 import { bootstrap } from "./presentation/nestjs/src/main";
-import { AppDataSource } from "@/infrastructure/database/typeorm/data-source";
+import { pool } from "@/infrastructure/database/drizzle/config";
 
 async function runServer() {
   console.log("🚀 Clean Architecture + DDD App starting...");
 
   try {
-    await AppDataSource.initialize(); // <-- khởi tạo DB
+    // Test database connection
+    const client = await pool.connect();
+    await client.query("SELECT 1");
+    client.release();
     console.log("✅ Database connected");
 
     await bootstrap(); // khởi chạy NestJS

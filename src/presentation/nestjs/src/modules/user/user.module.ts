@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 
-import { UserRepositoryTypeORM } from '@/infrastructure/database/typeorm/repositories';
+import { UserRepositoryDrizzle } from '@/infrastructure/database/drizzle/repositories';
 
 @Module({
   imports: [],
   controllers: [],
-  providers: [{ provide: 'IUserRepository', useClass: UserRepositoryTypeORM }],
+  providers: [{ provide: 'IUserRepository', useClass: UserRepositoryDrizzle }],
   exports: ['IUserRepository'],
 })
 export class UserModule {}

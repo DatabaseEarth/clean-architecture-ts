@@ -13,14 +13,14 @@ import {
 
 export class RegisterRequestDto {
   @ApiProperty({
-    name: 'full_name',
+    name: 'fullname',
     type: 'string',
     example: 'Nguyễn Thành Vinh',
   })
   @IsString({ message: validateMessage.string('Họ và tên') })
   @Length(2, 255, { message: validateMessage.length('Họ và tên', 2, 255) })
   @IsNotEmpty({ message: validateMessage.required('Họ và tên') })
-  @Expose({ name: 'full_name' })
+  @Expose({ name: 'fullname' })
   fullName: string;
 
   @ApiProperty({
