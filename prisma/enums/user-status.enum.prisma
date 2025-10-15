@@ -1,7 +1,0 @@
-// User status enum
-enum UserStatus {
-    ACTIVE
-    INACTIVE
-    SUSPENDED
-    DELETED
-}

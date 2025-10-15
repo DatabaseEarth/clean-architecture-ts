@@ -15,12 +15,17 @@
     "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:deploy": "prisma migrate deploy",
-    "prisma:studio": "prisma studio",
-    "prisma:reset": "prisma migrate reset",
-    "db:setup": "npm run prisma:generate && npm run prisma:migrate"
+    "prisma:pull": "npx prisma db pull",
+    "prisma:pull:force": "npx prisma db pull --force",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:migrate:reset": "npx prisma migrate reset --force",
+    "prisma:deploy": "npx prisma migrate deploy",
+    "prisma:studio": "npx prisma studio",
+    "prisma:validate": "npx prisma validate",
+    "prisma:format": "npx prisma format",
+    "prisma:check": "npx prisma validate && npx prisma format --check",
+    "prisma:preview": "npx prisma db seed --preview-feature"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",

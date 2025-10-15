@@ -1,13 +1,13 @@
 import "dotenv/config";
 import path from "node:path";
-import { defineConfig } from "prisma/config";
+import { PrismaConfig } from "prisma/config";
 
-export default defineConfig({
+export default {
   schema: path.join("prisma"),
   migrations: {
     path: path.join("prisma", "migrations"),
   },
-  views: {
-    path: path.join("prisma/views"),
-  },
-});
+  enums: {},
+  tables: {},
+  views: {},
+} satisfies PrismaConfig;
