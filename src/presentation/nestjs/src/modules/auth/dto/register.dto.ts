@@ -10,6 +10,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { RegisterAuthRequestDto } from '@/application/auth/dtos';
+import { Expose } from 'class-transformer';
 
 export class RegisterRequestDto implements RegisterAuthRequestDto {
   @ApiProperty({
@@ -20,6 +21,7 @@ export class RegisterRequestDto implements RegisterAuthRequestDto {
   @IsString({ message: validateMessage.string('Họ và tên') })
   @Length(2, 255, { message: validateMessage.length('Họ và tên', 2, 255) })
   @IsNotEmpty({ message: validateMessage.required('Họ và tên') })
+  @Expose({ name: 'fullname' })
   fullName: string;
 
   @ApiProperty({

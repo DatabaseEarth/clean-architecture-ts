@@ -34,6 +34,8 @@ export class RegisterAuthUseCase {
 
       return await this.userRepo.save(user);
     } catch (error) {
+      console.log(error);
+
       if (error instanceof BaseException) throw error;
       throw new BaseException({
         code: ErrorCode.INTERNAL_ERROR,

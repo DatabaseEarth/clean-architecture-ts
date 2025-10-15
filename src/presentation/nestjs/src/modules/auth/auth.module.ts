@@ -21,7 +21,7 @@ import {
 import { RefreshTokenService } from '@/application/auth/services';
 import { ConfigPort } from '@/application/ports/config';
 
-import { RefreshTokenRepositoryTypeORM } from '@/infrastructure/database/typeorm/repositories';
+import { RefreshTokenRepositoryPrisma } from '@/infrastructure/database/prisma/repositories';
 import { SecurityModule } from '../../infrastructure/security';
 
 @Module({
@@ -30,7 +30,7 @@ import { SecurityModule } from '../../infrastructure/security';
   providers: [
     {
       provide: 'IRefreshTokenRepository',
-      useClass: RefreshTokenRepositoryTypeORM,
+      useClass: RefreshTokenRepositoryPrisma,
     },
     {
       provide: RefreshTokenService,
