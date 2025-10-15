@@ -18,6 +18,7 @@
     "prisma:pull": "npx prisma db pull",
     "prisma:pull:force": "npx prisma db pull --force",
     "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:migrate:reset": "npx prisma migrate reset --force",
     "prisma:deploy": "npx prisma migrate deploy",

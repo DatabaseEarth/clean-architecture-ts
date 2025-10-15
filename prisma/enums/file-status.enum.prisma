@@ -1,0 +1,6 @@
+enum FileStatus {
+  ACTIVE
+  PROCESSING
+  FAILED
+  DELETED
+}

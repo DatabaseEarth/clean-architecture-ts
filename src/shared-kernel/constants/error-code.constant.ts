@@ -28,6 +28,9 @@ export const ERROR_CODES: Record<
   [ErrorCode.ACCESS_DENIED]: {
     httpStatus: HttpStatusCode.FORBIDDEN,
   },
+  [ErrorCode.NOT_FOUND]: {
+    httpStatus: HttpStatusCode.NOT_FOUND,
+  },
 
   // ---------------------- SYSTEM ----------------------
   [ErrorCode.INTERNAL_ERROR]: {

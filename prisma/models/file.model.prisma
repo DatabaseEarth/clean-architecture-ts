@@ -1,0 +1,26 @@
+model File {
+  id          String      @id @default(uuid()) @db.Uuid
+  originalName String     @map("original_name") @db.VarChar(255)
+  fileName    String      @map("file_name") @db.VarChar(255)
+  mimeType    String      @map("mime_type") @db.VarChar(100)
+  size        BigInt      @db.BigInt
+  path        String      @db.VarChar(500)
+  url         String      @db.VarChar(500)
+  type        FileType    // AVATAR, DOCUMENT, IMAGE, VIDEO, AUDIO, ARCHIVE, OTHER
+  status      FileStatus  // ACTIVE, PROCESSING, FAILED, DELETED
+  ownerType   String?     @map("owner_type") @db.VarChar(50) // user, account, customer, etc.
+  ownerId     String?     @map("owner_id") @db.Uuid
+  metadata    Json?       @db.Json
+  createdAt   DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt   DateTime?   @map("deleted_at") @db.Timestamptz(6)
+  createdBy   String?     @map("created_by") @db.Uuid
+  updatedBy   String?     @map("updated_by") @db.Uuid
+  deletedBy   String?     @map("deleted_by") @db.Uuid
+
+  @@index([ownerType, ownerId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+  @@map("files")
+}
