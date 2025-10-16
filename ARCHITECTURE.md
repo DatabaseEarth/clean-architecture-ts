@@ -17,6 +17,8 @@
 
 ## 🎯 Tổng quan kiến trúc
 
+> 📖 **Quick Start**: Xem [README.md](./README.md) để bắt đầu với dự án
+
 ### **Kiến trúc tổng thể**
 
 Dự án áp dụng **Clean Architecture** kết hợp **Domain-Driven Design (DDD)** với hỗ trợ **Dependency Injection (DI)** từ NestJS và **Separation of Concerns (SoC)** qua 4 tầng chính + shared kernel.
@@ -267,6 +269,10 @@ Dự án hiện tại đang:
 - [Domain-Driven Design - Eric Evans](https://domainlanguage.com/ddd/)
 - [NestJS Documentation](https://docs.nestjs.com/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+---
+
+> 📖 **Back to README**: Quay lại [README.md](./README.md) để xem hướng dẫn setup và chạy dự án
 
 ---
 

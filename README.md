@@ -17,6 +17,8 @@ Dự án implement **Clean Architecture** kết hợp với **Domain-Driven Desi
 
 ## 📁 Cấu trúc thư mục
 
+> 📖 **Chi tiết kiến trúc**: Xem [ARCHITECTURE.md](./ARCHITECTURE.md) để hiểu rõ hơn về Clean Architecture & DDD patterns
+
 ```
 src/
 ├── domain/                    # 🧠 Domain Layer
@@ -230,6 +232,8 @@ Dự án sử dụng:
 - **TypeScript** cho type safety
 
 ## 🎯 Design Patterns được sử dụng
+
+> 📖 **Chi tiết patterns**: Xem [ARCHITECTURE.md](./ARCHITECTURE.md#-nguyên-lý-thiết-kế) để hiểu rõ hơn về SOLID principles và Design Patterns
 
 - **Entity Pattern**: Rich domain objects với business logic
 - **Value Object Pattern**: Immutable objects với validation
