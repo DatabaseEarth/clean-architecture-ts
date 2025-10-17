@@ -1,9 +1,0 @@
-enum FileType {
-  AVATAR
-  DOCUMENT
-  IMAGE
-  VIDEO
-  AUDIO
-  ARCHIVE
-  OTHER
-}
