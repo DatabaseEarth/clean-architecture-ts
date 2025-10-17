@@ -1,21 +1,38 @@
 import { File } from "../entities";
-import { Id } from "@/shared-kernel/core";
+import { StorageProvider } from "../enums";
 
 export interface IFileRepository {
   save(file: File): Promise<File>;
   findById(id: string): Promise<File | null>;
-  findByOwner(ownerType: string, ownerId: string): Promise<File[]>;
-  findByType(ownerType: string, ownerId: string, type: string): Promise<File[]>;
+  findByEntity(entityType: string, entityId: string): Promise<File[]>;
+  findByType(
+    entityType: string,
+    entityId: string,
+    type: string
+  ): Promise<File[]>;
   findByPath(path: string): Promise<File | null>;
   findByUrl(url: string): Promise<File | null>;
   update(file: File): Promise<File>;
   delete(id: string): Promise<void>;
   softDelete(id: string, deletedBy?: string): Promise<void>;
-  findByOwnerAndType(
-    ownerType: string,
-    ownerId: string,
+  findByEntityAndType(
+    entityType: string,
+    entityId: string,
     type: string
   ): Promise<File[]>;
-  findActiveByOwner(ownerType: string, ownerId: string): Promise<File[]>;
+  findActiveByEntity(entityType: string, entityId: string): Promise<File[]>;
   findOrphanedFiles(olderThan: Date): Promise<File[]>;
+  findByStorageProvider(storageProvider: StorageProvider): Promise<File[]>;
+  findByExtension(extension: string): Promise<File[]>;
+  findByEntityAndStorageProvider(
+    entityType: string,
+    entityId: string,
+    storageProvider: StorageProvider
+  ): Promise<File[]>;
+  findFilesWithoutEntity(): Promise<File[]>;
+  findByEntityAndExtension(
+    entityType: string,
+    entityId: string,
+    extension: string
+  ): Promise<File[]>;
 }

@@ -1,6 +1,6 @@
 import { File } from "@/domain/file/entities";
 import { File as PrismaFile } from "@prisma/client";
-import { FileType, FileStatus } from "@/domain/file/enums";
+import { FileType, FileStatus, StorageProvider } from "@/domain/file/enums";
 
 export class FileMapper {
   static toDomain(entity: PrismaFile): File {
@@ -14,8 +14,10 @@ export class FileMapper {
       entity.url,
       entity.type as FileType,
       entity.status as FileStatus,
-      entity.ownerType,
-      entity.ownerId,
+      entity.entityType,
+      entity.entityId,
+      entity.extension,
+      entity.storageProvider as StorageProvider,
       (entity.metadata as Record<string, any>) || {},
       entity.createdAt,
       entity.createdBy || undefined
@@ -35,8 +37,10 @@ export class FileMapper {
       url: domain.url,
       type: domain.type,
       status: domain.status,
-      ownerType: domain.ownerType,
-      ownerId: domain.ownerId,
+      entityType: domain.entityType,
+      entityId: domain.entityId,
+      extension: domain.extension,
+      storageProvider: domain.storageProvider as string,
       metadata: domain.metadata || null,
       createdAt: domain.createdAt,
       updatedAt: domain.updatedAt,

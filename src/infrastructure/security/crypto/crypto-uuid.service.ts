@@ -1,8 +1,8 @@
-import crypto from 'crypto';
-import { IUuidService } from '@/application/ports/security/uuid.port';
+import crypto from "crypto";
+import { IUuidService } from "@/application/ports/security";
 
 export class CryptoUuidService implements IUuidService {
-    generate(): string {
-        return crypto.randomUUID();
-    }
+  generate(): string {
+    return crypto.randomUUID();
+  }
 }

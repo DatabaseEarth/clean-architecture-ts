@@ -1,11 +1,9 @@
-import { Injectable } from "@nestjs/common";
 import { IFileRepository } from "@/domain/file/repositories";
 import { File } from "@/domain/file/entities";
 import { FileMapper } from "../mappers/file.mapper";
-import { FileType, FileStatus } from "@/domain/file/enums";
+import { FileType, FileStatus, StorageProvider } from "@/domain/file/enums";
 import { PrismaClient } from "@prisma/client";
 
-@Injectable()
 export class FileRepositoryPrisma implements IFileRepository {
   private prisma: PrismaClient;
   constructor(prismaClient?: PrismaClient) {
@@ -27,11 +25,11 @@ export class FileRepositoryPrisma implements IFileRepository {
     return entity ? FileMapper.toDomain(entity) : null;
   }
 
-  async findByOwner(ownerType: string, ownerId: string): Promise<File[]> {
+  async findByEntity(entityType: string, entityId: string): Promise<File[]> {
     const entities = await this.prisma.file.findMany({
       where: {
-        ownerType: ownerType,
-        ownerId: ownerId,
+        entityType: entityType,
+        entityId: entityId,
         deletedAt: null,
       },
       orderBy: { createdAt: "desc" },
@@ -40,14 +38,14 @@ export class FileRepositoryPrisma implements IFileRepository {
   }
 
   async findByType(
-    ownerType: string,
-    ownerId: string,
+    entityType: string,
+    entityId: string,
     type: FileType
   ): Promise<File[]> {
     const entities = await this.prisma.file.findMany({
       where: {
-        ownerType: ownerType,
-        ownerId: ownerId,
+        entityType: entityType,
+        entityId: entityId,
         type: type as FileType,
         deletedAt: null,
       },
@@ -99,15 +97,15 @@ export class FileRepositoryPrisma implements IFileRepository {
     });
   }
 
-  async findByOwnerAndType(
-    ownerType: string,
-    ownerId: string,
+  async findByEntityAndType(
+    entityType: string,
+    entityId: string,
     type: FileType
   ): Promise<File[]> {
     const entities = await this.prisma.file.findMany({
       where: {
-        ownerType: ownerType,
-        ownerId: ownerId,
+        entityType: entityType,
+        entityId: entityId,
         type: type as FileType,
         status: FileStatus.ACTIVE,
         deletedAt: null,
@@ -117,11 +115,14 @@ export class FileRepositoryPrisma implements IFileRepository {
     return entities.map(FileMapper.toDomain);
   }
 
-  async findActiveByOwner(ownerType: string, ownerId: string): Promise<File[]> {
+  async findActiveByEntity(
+    entityType: string,
+    entityId: string
+  ): Promise<File[]> {
     const entities = await this.prisma.file.findMany({
       where: {
-        ownerType: ownerType,
-        ownerId: ownerId,
+        entityType: entityType,
+        entityId: entityId,
         status: FileStatus.ACTIVE,
         deletedAt: null,
       },
@@ -137,6 +138,77 @@ export class FileRepositoryPrisma implements IFileRepository {
         status: FileStatus.PROCESSING,
         deletedAt: null,
       },
+    });
+    return entities.map(FileMapper.toDomain);
+  }
+
+  // New methods for enhanced functionality
+  async findByStorageProvider(
+    storageProvider: StorageProvider
+  ): Promise<File[]> {
+    const entities = await this.prisma.file.findMany({
+      where: {
+        storageProvider: storageProvider,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return entities.map(FileMapper.toDomain);
+  }
+
+  async findByExtension(extension: string): Promise<File[]> {
+    const entities = await this.prisma.file.findMany({
+      where: {
+        extension: extension,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return entities.map(FileMapper.toDomain);
+  }
+
+  async findByEntityAndStorageProvider(
+    entityType: string,
+    entityId: string,
+    storageProvider: StorageProvider
+  ): Promise<File[]> {
+    const entities = await this.prisma.file.findMany({
+      where: {
+        entityType: entityType,
+        entityId: entityId,
+        storageProvider: storageProvider,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return entities.map(FileMapper.toDomain);
+  }
+
+  async findFilesWithoutEntity(): Promise<File[]> {
+    const entities = await this.prisma.file.findMany({
+      where: {
+        entityType: null,
+        entityId: null,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return entities.map(FileMapper.toDomain);
+  }
+
+  async findByEntityAndExtension(
+    entityType: string,
+    entityId: string,
+    extension: string
+  ): Promise<File[]> {
+    const entities = await this.prisma.file.findMany({
+      where: {
+        entityType: entityType,
+        entityId: entityId,
+        extension: extension,
+        deletedAt: null,
+      },
+      orderBy: { createdAt: "desc" },
     });
     return entities.map(FileMapper.toDomain);
   }

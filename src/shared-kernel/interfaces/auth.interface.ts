@@ -1,7 +1,3 @@
-/**
- * Authentication related interfaces
- */
-
 export interface ICurrentUserPayload {
   id: string;
   email: string;

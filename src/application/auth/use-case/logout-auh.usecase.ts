@@ -1,4 +1,4 @@
-import { ITokenService } from "@/application/ports";
+import { ITokenService } from "@/application/ports/security";
 import { LogoutAuthRequestDto } from "../dtos";
 import { RefreshTokenService } from "../services";
 

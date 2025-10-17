@@ -1,5 +1,5 @@
 import { BaseEntity } from "@/shared-kernel/core";
-import { FileType, FileStatus } from "../enums";
+import { FileType, FileStatus, StorageProvider } from "../enums";
 
 export class File extends BaseEntity {
   private _originalName: string;
@@ -10,8 +10,10 @@ export class File extends BaseEntity {
   private _url: string;
   private _type: FileType;
   private _status: FileStatus;
-  private _ownerType: string | null; // 'user', 'account', 'customer', etc.
-  private _ownerId: string | null;
+  private _entityType: string | null;
+  private _entityId: string | null;
+  private _extension: string;
+  private _storageProvider: StorageProvider;
   private _metadata?: Record<string, any> | null;
 
   constructor(
@@ -24,8 +26,10 @@ export class File extends BaseEntity {
     url: string,
     type: FileType,
     status: FileStatus,
-    ownerType: string | null,
-    ownerId: string | null,
+    entityType: string | null,
+    entityId: string | null,
+    extension: string,
+    storageProvider: StorageProvider,
     metadata?: Record<string, any> | null,
     createdAt?: Date,
     createdBy?: string | null
@@ -39,8 +43,10 @@ export class File extends BaseEntity {
     this._url = url;
     this._type = type;
     this._status = status;
-    this._ownerType = ownerType;
-    this._ownerId = ownerId;
+    this._entityType = entityType;
+    this._entityId = entityId;
+    this._extension = extension;
+    this._storageProvider = storageProvider;
     this._metadata = metadata;
   }
 
@@ -77,12 +83,20 @@ export class File extends BaseEntity {
     return this._status;
   }
 
-  get ownerType(): string | null {
-    return this._ownerType;
+  get entityType(): string | null {
+    return this._entityType;
   }
 
-  get ownerId(): string | null {
-    return this._ownerId;
+  get entityId(): string | null {
+    return this._entityId;
+  }
+
+  get extension(): string {
+    return this._extension;
+  }
+
+  get storageProvider(): StorageProvider {
+    return this._storageProvider;
   }
 
   get metadata(): Record<string, any> | null {
@@ -112,7 +126,7 @@ export class File extends BaseEntity {
   }
 
   getExtension(): string {
-    return this.originalName.split(".").pop()?.toLowerCase() || "";
+    return this.extension;
   }
 
   getSizeInMB(): number {
@@ -121,6 +135,32 @@ export class File extends BaseEntity {
 
   isActive(): boolean {
     return this.status === FileStatus.ACTIVE && !this.deletedAt;
+  }
+
+  // Storage provider methods
+  isCloudStorage(): boolean {
+    return [
+      StorageProvider.S3,
+      StorageProvider.GCS,
+      StorageProvider.AZURE,
+      StorageProvider.MINIO,
+      StorageProvider.CLOUDFLARE,
+      StorageProvider.DIGITAL_OCEAN,
+      StorageProvider.BACKBLAZE,
+    ].includes(this.storageProvider);
+  }
+
+  isLocalStorage(): boolean {
+    return this.storageProvider === StorageProvider.LOCAL;
+  }
+
+  // Entity methods
+  hasEntity(): boolean {
+    return this.entityType !== null && this.entityId !== null;
+  }
+
+  belongsToEntity(entityType: string, entityId: string): boolean {
+    return this.entityType === entityType && this.entityId === entityId;
   }
 
   markAsDeleted(deletedBy?: string): File {
@@ -134,13 +174,18 @@ export class File extends BaseEntity {
       this.url,
       this.type,
       FileStatus.DELETED,
-      this.ownerType,
-      this.ownerId,
+      this.entityType,
+      this.entityId,
+      this.extension,
+      this.storageProvider,
       this.metadata,
       this.createdAt,
       this.createdBy
     );
-    file.markAsDeleted(deletedBy);
+
+    (file as any)._deletedAt = new Date();
+    (file as any)._deletedBy = deletedBy || null;
+
     return file;
   }
 }

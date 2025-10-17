@@ -11,15 +11,18 @@ import { JwtTokenService } from '@/infrastructure/security/jwt';
   imports: [],
   controllers: [],
   providers: [
-    { provide: 'IHashService', useClass: BcryptHashService },
-    { provide: 'IUuidService', useClass: CryptoUuidService },
+    {
+      provide: 'IHashService',
+      useFactory: (config: ConfigPort) => new BcryptHashService(config),
+      inject: ['ConfigPort'],
+    },
+    {
+      provide: 'IUuidService',
+      useClass: CryptoUuidService,
+    },
     {
       provide: 'ITokenService',
-      useFactory: (config: ConfigPort) =>
-        new JwtTokenService(
-          config.get<string>('AUTH_SECRET'),
-          config.get<StringValue>('AUTH_ACCESS_TOKEN_EXPIRES'),
-        ),
+      useFactory: (config: ConfigPort) => new JwtTokenService(config),
       inject: ['ConfigPort'],
     },
   ],
