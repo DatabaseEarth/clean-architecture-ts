@@ -1,16 +1,19 @@
 import { CachePort } from "@/application/ports/cache";
 import { ConfigPort } from "@/application/ports/config";
+import { EnvConfigService } from "@/infrastructure/config/joi";
 import Redis from "ioredis";
 
 export class RedisCacheService implements CachePort {
   private client: Redis;
+  private config: ConfigPort;
 
-  constructor(config: ConfigPort) {
+  constructor(config: ConfigPort = new EnvConfigService()) {
+    this.config = config;
     this.client = new Redis({
-      host: config.get<string>("REDIS_HOST"),
-      port: config.get<number>("REDIS_PORT"),
-      username: config.get<string>("REDIS_USERNAME"),
-      password: config.get<string>("REDIS_PASSWORD"),
+      host: this.config.get<string>("REDIS_HOST"),
+      port: this.config.get<number>("REDIS_PORT"),
+      username: this.config.get<string>("REDIS_USERNAME"),
+      password: this.config.get<string>("REDIS_PASSWORD"),
     });
   }
 

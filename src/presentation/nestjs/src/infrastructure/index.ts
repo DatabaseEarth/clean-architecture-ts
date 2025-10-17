@@ -4,8 +4,8 @@ import { LoggerModule } from './logger';
 import { SecurityModule } from './security';
 
 export const infrastructure = [
-  LoggerModule,
   ConfigModule,
+  LoggerModule,
   CacheModule,
   SecurityModule,
 ];

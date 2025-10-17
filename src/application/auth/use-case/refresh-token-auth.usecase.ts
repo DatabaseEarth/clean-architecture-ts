@@ -1,4 +1,5 @@
-import { ConfigPort, ITokenService } from "@/application/ports";
+import { ITokenService } from "@/application/ports/security";
+import { ConfigPort } from "@/application/ports/config";
 import { LoginAuthResponseDto, LogoutAuthRequestDto } from "../dtos";
 import { RefreshTokenService } from "../services";
 import { BaseException } from "@/shared-kernel/exceptions";

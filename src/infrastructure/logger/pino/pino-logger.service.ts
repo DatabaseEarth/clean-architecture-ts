@@ -1,15 +1,19 @@
+import { ConfigPort } from "@/application/ports/config";
 import { LoggerPort } from "@/application/ports/logger/logger.port";
-import pino from "pino";
+import { EnvConfigService } from "@/infrastructure/config/joi";
+import pino, { Logger } from "pino";
 
 export class PinoLoggerService implements LoggerPort {
-  private readonly logger;
+  private readonly logger: Logger;
+  private readonly config: ConfigPort;
 
-  constructor() {
-    const isProd = process.env.NODE_ENV === "production";
+  constructor(config: ConfigPort = new EnvConfigService()) {
+    this.config = config;
+    const isProd = this.config.get<string>("NODE_ENV") === "production";
     this.logger = pino(
       isProd
         ? {
-            level: process.env.LOG_LEVEL || "info",
+            level: this.config.get<string>("LOG_LEVEL") || "info",
             transport: {
               target: "pino-roll",
               options: {
@@ -22,7 +26,7 @@ export class PinoLoggerService implements LoggerPort {
             },
           }
         : {
-            level: "debug",
+            level: this.config.get<string>("LOG_LEVEL") || "debug",
             transport: {
               target: "pino-pretty",
               options: {
