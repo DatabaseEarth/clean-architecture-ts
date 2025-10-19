@@ -28,6 +28,8 @@ const schema = Joi.object({
   AUTH_SECRET: Joi.string().required(),
   AUTH_ACCESS_TOKEN_EXPIRES: Joi.string().default("15m"),
   AUTH_REFRESH_TOKEN_EXPIRES: Joi.string().default("7d"),
+
+  BCRYPT_SALT_ROUNDS: Joi.number().default(10),
 }).unknown();
 
 const { error, value: envVars } = schema.validate(process.env);
